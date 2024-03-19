@@ -1,5 +1,7 @@
 import User from "../model/mongodb/users/User";
+import nodemailer from "nodemailer";
 
+let log = debug("app:send.mail.js");
 app.post('/forgot-password', (req, res) => {
     const { email } = req.body;
     User.findOne({ email: email })
@@ -11,7 +13,7 @@ app.post('/forgot-password', (req, res) => {
 
 
 
-            var transporter = nodemailer.createTransport({
+            const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
                     userFromDB: 'ehabmj1212@gmail.com',
@@ -19,7 +21,7 @@ app.post('/forgot-password', (req, res) => {
                 }
             });
 
-            var mailOptions = {
+            const mailOptions = {
                 from: 'ehabmj1212@gmail.com',
                 to: userFromDB.email,
                 subject: 'Reset Password Link',
@@ -28,7 +30,7 @@ app.post('/forgot-password', (req, res) => {
 
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
-                    console.log(error);
+                    log(error);
                 } else {
                     return res.send({ Status: "Success" + info.response })
                 }

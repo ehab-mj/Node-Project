@@ -32,7 +32,6 @@ const updateCardMongo = (id, cardData) => {
 
 const updateLikeCardMongo = (id, likes) => {
   return Card.findByIdAndUpdate(id, { likes }, { new: true });
-  // return Card.findByIdAndUpdate(id, {likes: likes}, { new: true });
 };
 //delete
 const deleteCardMongo = (id) => {

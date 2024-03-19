@@ -22,9 +22,6 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    // minLength: 7,
-    // maxLength: 20,
-    // match: RegExp(passwordRegex),
   },
   image: Image,
   address: Address,
@@ -43,10 +40,6 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("user", UserSchema);
-/**
- * create users collection
- * connect users collection to user schema
- * create user model that allow us to crud to/from database - users collection(table)
- */
+
 
 export default User;

@@ -20,18 +20,17 @@ const log = debug("app:loginController");
 const registerController = async (req, res) => {
   try {
     let userFromDB = await getUserByEmail(req.body.email);
-    // console.log(userFromDB);
+
     if (userFromDB) throw new Error("user already exists");
     let passwordHash = await generateHash(req.body.password);
-    // console.log(req.body);
+
     req.body.password = passwordHash;
-    // console.log(req.body);
+
     let newUser = await createUser(req.body);
     newUser.password = undefined;
     newUser.UserFailedToLogin = 0;
     await updateUser(newUser._id, newUser);
-    delete newUser.password; // not working, Sasha do not know why, ask gpt
-    // console.log(newUser);
+    delete newUser.password;
 
     const transporter = nodeMailer.createTransport({
       service: 'gmail',
@@ -73,13 +72,13 @@ const registerController = async (req, res) => {
 const loginController = async (req, res) => {
   try {
     let userFromDB = await getUserByEmail(req.body.email);
-    // console.log(userFromDB);
+
     if (!userFromDB)
       throw new Error("invalid email or password");
 
     let passwordMatch = await cmpHash(req.body.password, userFromDB.password);
     if (!passwordMatch) {
-      ///////
+
       let UnlockedUser = UserUpdateLogin(userFromDB.FailedLoginAttempts);
 
       userFromDB.UserFailedToLogin++;
@@ -100,7 +99,7 @@ const loginController = async (req, res) => {
       isBusiness: userType.isBusiness,
     });
 
-    //////
+
     const transporter = nodeMailer.createTransport({
       service: 'gmail',
       auth: {
@@ -131,7 +130,7 @@ Hello ${userType.name.first + " " + userType.name.last},
         return res.send({ Status: "Success" + info.response })
       }
     });
-    /////
+
     res.json(token);
   } catch (err) {
     log(err);
@@ -140,21 +139,13 @@ Hello ${userType.name.first + " " + userType.name.last},
 };
 
 const updateUserController = async (req, res) => {
-  /**
-   * validation | mw, joi
-   * update user:
-   * if(user is admin) then update user
-   * if user is not admin then if user._id === payload(token)._id then update user
-   * response user
-   */
+
   try {
-    // if (!req.userData.isAdmin && req.userData._id !== req.params.id)
-    //   throw new Error("you not allowed to update");
+
     let userFromDB = await updateUser(req.params.id, req.body);
     userFromDB.password = undefined;
     res.json(userFromDB);
   } catch (err) {
-    console.log(err);
     handleError(res, 400, err.message);
   }
 };
@@ -165,7 +156,6 @@ const patchIsBizController = async (req, res) => {
     userFromDB.password = undefined;
     res.json(userFromDB);
   } catch (err) {
-    console.log(err);
     handleError(res, 400, err.message);
   }
 };
@@ -176,7 +166,6 @@ const deleteUserController = async (req, res) => {
     userFromDB.password = undefined;
     res.json(userFromDB);
   } catch (err) {
-    console.log(err);
     handleError(res, 400, err.message);
   }
 };
@@ -185,7 +174,6 @@ const getAllUsersController = async (req, res) => {
     let users = await getAllUsers();
     res.json(users);
   } catch (err) {
-    console.log(err);
     handleError(res, 400, err.message);
   }
 };
@@ -199,17 +187,6 @@ const getUserByIdController = async (req, res) => {
     handleError(res, 400, err.message);
   }
 };
-
-// const forgetPasswordController = async (req, res) => {
-//   try {
-//     let userFromDB = await getUserByEmail(req.body.email);
-//     // console.log(userFromDB);
-//     if (!userFromDB)
-//       throw new Error("invalid email or password");
-//   } catch (err) {
-//     handleError(res, 400, err.message);
-//   }
-// }
 
 
 
