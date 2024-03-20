@@ -38,6 +38,7 @@ npm i mongoose
 ```bash
 npm install cors
 ```
+
 ### <span style="color:#ff6600">Step 2: </span>API for Register a new user
 
 ###  <span style="color:#FFE338">POST </span> /api/users
@@ -95,7 +96,7 @@ In the request body you will need to provide an object with the following keys a
 
 ### <span style="color:#ff6600">Step 4: </span>Server Links
 
-# Users
+# Users / https://documenter.getpostman.com/view/31306865/2sA358eRzw
 ## <span style="color:#45FFCA">To Get all users:</span> 
 ### <span style="color:#45FFCA">GET </span> /api/users
 ================================================
@@ -158,7 +159,7 @@ get an answer from this api
 ### <span style="color:#DD58D6">PATCH </span> /api/users/:id
 
 ================================================
-# Cards
+# Cards / https://documenter.getpostman.com/view/31306865/2sA2xe5upt
 ## <span style="color:#45FFCA">To Get all cards:</span> 
 ### <span style="color:#45FFCA">GET </span> /api/cards
 ================================================
