@@ -43,11 +43,6 @@ const getMyCardsController = async (req, res) => {
 };
 
 const createCardController = async (req, res) => {
-  /**
-   * user logged
-   * user logged in as biz
-   * joi on body
-   */
   try {
     const userId = req.userData._id;
     req.body.user_id = userId;
