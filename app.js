@@ -3,7 +3,6 @@ import path from "node:path";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 import helmet from "helmet";
-// import logger from "morgan";
 import logger from "./loggers/loggerAdapter.js";
 import * as url from "url";
 import cors from "cors";
@@ -35,7 +34,6 @@ app.use(logger());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "build")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
